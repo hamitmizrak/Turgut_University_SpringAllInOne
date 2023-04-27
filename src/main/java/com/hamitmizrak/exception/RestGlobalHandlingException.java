@@ -1,5 +1,6 @@
 package com.hamitmizrak.exception;
 
+import com.hamitmizrak.error.ApiResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -11,32 +12,62 @@ public class RestGlobalHandlingException {
 
     // HamitMizrakException
     @ExceptionHandler({HamitMizrakException.class})
-    public String adviceHamitMizrakException() {
-        return "Hamit Mızrak Exception";
+    public ApiResult adviceHamitMizrakException() {
+        ApiResult  apiResult = ApiResult.builder()
+                .error("Genel hata")
+                .message("Rest Global Handling Exception")
+                .path("/api")
+                .status(44)
+                .build();
+        return apiResult;
     }
 
     // status codes: 404
     // ResourceNotFoundException
     @ExceptionHandler({ResourceNotFoundException.class})
-    public String adviceResourceNotFoundException() {
-        return "HM 404 Hatası ";
+    public ApiResult adviceResourceNotFoundException() {
+        ApiResult  apiResult = ApiResult.builder()
+                .error("Bulunamadı")
+                .message("404 Hatası")
+                .path("/api")
+                .status(404)
+                .build();
+        return apiResult;
     }
 
     // status codes: 401
     @ExceptionHandler({ResourceAuthorizedException.class})
-    public String adviceResourceAuthorizedException() {
-        return "HM Yetkisiz Giriş";
+    public ApiResult adviceResourceAuthorizedException() {
+        ApiResult  apiResult = ApiResult.builder()
+                .error("Yetkisiz Giriş")
+                .message("401 Hatası")
+                .path("/api")
+                .status(401)
+                .build();
+        return apiResult;
     }
 
     // status codes: 400
     @ExceptionHandler({ResourceBadRequestException.class})
-    public String adviceResourceBadRequestException() {
-        return "HM Kötü istek";
+    public ApiResult adviceResourceBadRequestException() {
+        ApiResult  apiResult = ApiResult.builder()
+                .error("Kötü istek")
+                .message("400 Hatası")
+                .path("/api")
+                .status(400)
+                .build();
+        return apiResult;
     }
 
     // status codes:  201
     @ExceptionHandler({ResourceCreatedException.class})
-    public String adviceResourceCreatedException() {
-        return "HM Oluşturuldu";
+    public ApiResult adviceResourceCreatedException() {
+        ApiResult  apiResult = ApiResult.builder()
+                .error("Oluşturuldu")
+                .message("201")
+                .path("/api")
+                .status(201)
+                .build();
+        return apiResult;
     }
 }

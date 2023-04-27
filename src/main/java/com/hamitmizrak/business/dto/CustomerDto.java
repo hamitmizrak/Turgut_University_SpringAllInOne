@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -41,11 +40,11 @@ public class CustomerDto implements Serializable {
     private String email;
 
     //PASSWORD
+    //@Min(value = 7,message = "Şifreyi 7 küçük giremezsiniz")
+    //@Max(value = 7,message = "Şifreyi 10 büyük giremezsiniz")
     @NotEmpty(message = "{customer.password.validation.constraints.NotNull.message}")
     @Size(min = 7, max = 10, message = "{customer.password.pattern.validation.constraints.NotNull.message}")
-    @Min(value = 7,message = "Şifreyi 7 küçük giremezsiniz")
-    @Max(value = 7,message = "Şifreyi 10 büyük giremezsiniz")
-    //@Pattern(regexp = "",message = "{}")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).*$", message = "{customer.password.pattern.validation.constraints.NotNull.message}")
     private String password;
 
     private String image;
