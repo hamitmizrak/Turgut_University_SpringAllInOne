@@ -2,7 +2,6 @@ package com.hamitmizrak.controller.api;
 
 import com.hamitmizrak.business.dto.CustomerDto;
 import com.hamitmizrak.business.services.impl.CustomerServices;
-import com.hamitmizrak.controller.ICustomerApi;
 import com.hamitmizrak.error.ApiResult;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;

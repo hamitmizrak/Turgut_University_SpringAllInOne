@@ -1,4 +1,4 @@
-package com.hamitmizrak.controller;
+package com.hamitmizrak.controller.api;
 
 import com.hamitmizrak.business.dto.CustomerDto;
 import org.springframework.http.ResponseEntity;
