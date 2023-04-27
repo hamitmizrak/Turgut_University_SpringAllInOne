@@ -18,9 +18,9 @@ import java.util.TimeZone;
 @EnableJpaRepositories(basePackages ="com.hamitmizrak.data.repository" ) //Repository bulamadığı zaman
 
 @SpringBootApplication(exclude = {
-        SecurityAutoConfiguration.class,
-        //org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
-        //org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class
+        //SecurityAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
+        org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class
 }
 )
 //@SpringBootApplication

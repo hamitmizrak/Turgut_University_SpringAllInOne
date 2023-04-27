@@ -48,7 +48,7 @@ public class CustomerEntity  extends BaseEntity implements Serializable  {
     @Column(
             name = "email",
             nullable = true,
-            unique = true,
+            //unique = true, // bunun yerine kendi Annotation yazdım
             length = 100,
             insertable = true,
             updatable = true,

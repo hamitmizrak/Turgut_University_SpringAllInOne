@@ -22,7 +22,7 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 // CORS: eğer reactta package.json'da proxy yazarsam @CrossOrigin yazmasamda olur
 @RequestMapping("/customer/api/v1")
-public class CustomerApi implements ICustomerApi {
+public class CustomerApiImpl implements ICustomerApi {
 
     // ERROR
     private ApiResult apiResult;

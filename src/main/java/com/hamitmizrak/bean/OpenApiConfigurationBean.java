@@ -8,13 +8,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+//@EnableSwagger2
 public class OpenApiConfigurationBean {
 
-    //localhost:4444/swagger-ui.html
+    //localhost:2222/swagger-ui.html
     //swagger: API Document
     @Bean
-    public OpenAPI openAPIMethod(){
-        return new OpenAPI().info( new Info()
+    public OpenAPI openAPIMethod() {
+        return new OpenAPI().info(new Info()
                 .title("title bilgisi")
                 .description("description bilgisi")
                 .version("V1.0")
@@ -29,3 +30,4 @@ public class OpenApiConfigurationBean {
         );
     }
 }
+

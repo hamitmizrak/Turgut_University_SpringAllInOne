@@ -1,5 +1,6 @@
 package com.hamitmizrak.business.dto;
 
+import com.hamitmizrak.annotation.CustomerUniqueEmail;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +37,7 @@ public class CustomerDto implements Serializable {
     //EMAİL
     @NotEmpty(message = "{customer.email.validation.constraints.NotNull.message}")
     @Email(message = "{customer.email.validation.regex.constraints.NotNull.message}")
-    // Anonation
+    @CustomerUniqueEmail
     private String email;
 
     //PASSWORD
