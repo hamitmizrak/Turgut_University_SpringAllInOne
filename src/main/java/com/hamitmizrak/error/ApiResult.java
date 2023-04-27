@@ -29,13 +29,13 @@ public class ApiResult {
     private String message;
     private String error;
     //tarih
-    private Date createdDate=new Date(System.currentTimeMillis());
+    private Date createdDate = new Date(System.currentTimeMillis());
     //private String createdDate=nowDate();
 
     //validationError
-    private Map<String,String> validationErrors;
+    private Map<String, String> validationErrors;
 
-   //Parametreli constructor
+    //Parametreli constructor
     public ApiResult(int status, String path, String message, String error) {
         this.status = status;
         this.path = path;
