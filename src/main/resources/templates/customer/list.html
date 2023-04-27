@@ -1,5 +1,5 @@
 <!doctype html>
-<html  th:lang="${#locale.language}"  xmlns:th="http://www.thymeleaf.org" >
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Thymeleaf String</title>
 
@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- seo -->
-    <meta name="keywords" content="html5,css3,js,jquery,bootstrap,react,javase" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="keywords" content="html5,css3,js,jquery,bootstrap,react,javase"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
     <!-- font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
@@ -31,17 +31,116 @@
     <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 
-    <link rel="stylesheet"   th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <script th:src="@{/js/template.js}"></script>
+
+    <!-- dataTables CSS: paging and sorting -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css"/>
 </head>
 
 <body class="container">
 
-    <!-- start codes -->
-    <h1 class="text-primary">LIST</h1>
+<!-- http://localhost:2222/customer/list -->
 
-    <!-- ends codes -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <strong th:text="${customer_success}"></strong>
+</div>
+
+<a th:href="@{/customer/create}" class="btn btn-primary">EKLE</a>
+<a th:href="@{/speedData}" class="btn btn-secondary">Hızlı Ekle</a>
+<a th:href="@{/speedDelete}" class="btn btn-danger">Bütün veriyi sil</a>
+<br><br>
+
+<!-- start codes -->
+<h1 class="text-primary">LIST</h1>
+
+
+<table class="table table-hover table-striped" id="datalistregisterTable">
+    <thead>
+    <tr>
+        <th class="text-uppercase" th:text="#{customer.id}"></th>
+        <th class="text-uppercase" th:text="#{customer.name}"></th>
+        <th class="text-uppercase" th:text="#{customer.surname}"></th>
+        <th class="text-uppercase" th:text="#{customer.email}"></th>
+        <th class="text-uppercase" th:text="#{customer.password}"></th>
+        <th class="text-uppercase" th:text="#{customer.date}"></th>
+        <th class="text-uppercase" th:text="#{customer.update}"></th>
+        <th class="text-uppercase" th:text="#{customer.show}"></th>
+        <th class="text-uppercase" th:text="#{customer.delete}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${cust.id>0}" th:each="cust:${customer_list}">
+        <td th:text="${cust.id}"></td>
+        <td th:text="${cust.name}"></td>
+        <td th:text="${cust.surname}"></td>
+        <td th:text="${cust.email}"></td>
+        <td th:text="${cust.password}"></td>
+        <td th:text="${cust.createdDate}"></td>
+        <td>
+            <a class="btn btn-primary" th:href="@{/customer/update/{id}(id=${cust.id})}">
+                <i   class="fa-solid fa-wrench"></i>
+            </a>
+        </td>
+        <td>
+            <a class="btn btn-success" th:href="@{/customer/find/{id}(id=${cust.id})}">
+                <i  class="fa-solid fa-eye btn-sm"></i>
+            </a>
+        </td>
+        <!-- <td><a th:href="@{/customer/delete/{id}(id=${cust.id})}" th:onclick="if(!(confirm('silmek istiyor musunuz ?'))) return false" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>-->
+        <td>
+            <a class="btn btn-danger" th:onclick="'deleteSweetAlertRegister(\'/customer/delete/' + ${cust.id} +'\')'">
+            <i class="fa-solid fa-trash-can"></i>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- dataTables JS: paging and sorting -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#datalistregisterTable").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': false,
+                'aTargets': [-1] /* 1st one, start by the right */
+            }]
+        });
+    })
+</script>
+
+<!-- ends codes -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+
+<!--  Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+    function deleteSweetAlertRegister(url) {
+        swal({
+            title: "Silmek istediğinizden emin misiniz?",
+            text: "Silindikten sonra tekrar geri alınamaz.",
+            icon: "warning",
+            buttons: ["İptal", "Sil"],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Kayıt başarılı bir şekilde silindi.", {
+                        icon: "success",
+                    });
+                    window.location.href = url;
+                } else {
+                    swal("İptal edildi.", {
+                        icon: "warning",
+                    });
+                }
+            });
+    }
+</script>
 </body>
 </html>

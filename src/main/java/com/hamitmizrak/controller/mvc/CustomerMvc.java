@@ -20,17 +20,17 @@ import java.util.Map;
 
 // Spring MVC
 @Controller
-@RequestMapping("/controller")
+@RequestMapping("/customer")
 public class CustomerMvc implements ICustomerMvc {
 
     // Injection
     private final ICustomerServices customerServices;
 
     // CREATE => GET
-    // http://localhost:2222/controller/create
+    // http://localhost:2222/customer/create
     @Override
     @GetMapping("/create")
-    public String createGetMapping(Model model) {
+    public String customerCreateGet(Model model) {
         model.addAttribute("customer_create", new CustomerDto());
         return "customer/create";
     }
@@ -38,7 +38,7 @@ public class CustomerMvc implements ICustomerMvc {
     // CREATE => POST
     @Override
     @PostMapping("/create")
-    public String createPostMapping(@Valid @ModelAttribute("customer_create") CustomerDto customerDto, BindingResult bindingResult, Model model) {
+    public String customerCreatePost(@Valid @ModelAttribute("customer_create") CustomerDto customerDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.error("HATA CREATED" + bindingResult);
             return "customer/create";
@@ -48,15 +48,15 @@ public class CustomerMvc implements ICustomerMvc {
         log.info(customerDto);
         // Services Create
         customerServices.createRegister(customerDto);
-        return "redirect:/list";
+        return "redirect:/customer/list";
     }
 
 
     // LIST
-    // http://localhost:2222/controller/list
+    // http://localhost:2222/customer/list
     @Override
     @GetMapping("/list")
-    public String listGetMapping(Model model) {
+    public String customerListGet(Model model) {
         // Services List
         List<CustomerDto> list = customerServices.getAllCustomers();
         model.addAttribute("customer_list", list);
@@ -67,53 +67,54 @@ public class CustomerMvc implements ICustomerMvc {
     }
 
     // FIND
-    // http://localhost:2222/controller/find/1
+    // http://localhost:2222/customer/find/1
     @Override
     @GetMapping("/find/{id}")
-    public String findGetMapping(@PathVariable(name = "id") Long id, Model model) {
+    public String customerFindGet(@PathVariable(name = "id") Long id, Model model) {
         // Services List
         CustomerDto find = customerServices.getFindByCustomerId(id);
         model.addAttribute("customer_find", find);
         System.out.println(find);
-        return "redirect:/list";
+        return "customer/detail";
     }
 
     // DELETE
-    // http://localhost:2222/controller/delete/1
+    // http://localhost:2222/customer/delete/1
     @Override
     @GetMapping("/delete/{id}")
-    public String deleteGetMapping(@PathVariable(name = "id") Long id, Model model) {
+    public String customerDeleteGet(@PathVariable(name = "id") Long id, Model model) {
         // Services List
         Map<String, Boolean> mapDelete = customerServices.deleteCustomer(id);
         model.addAttribute("customer_find", mapDelete);
         System.out.println(mapDelete);
-        return "redirect:/list";
+        return "redirect:/customer/list";
     }
 
 
-    // UPDATE => GET
-    // http://localhost:2222/controller/update/1
+    // UPDATE
+    // http://localhost:2222/customer/update/1
     @Override
     @GetMapping("/update/{id}")
-    public String updateGetMapping(@PathVariable(name = "id") Long id, Model model) {
-        model.addAttribute("customer_update", new CustomerDto());
+    public String customerUpdateGet(@PathVariable(name = "id") Long id, Model model) {
+        CustomerDto customerDto = customerServices.getFindByCustomerId(id);
+        if (customerDto != null) {
+            model.addAttribute("customer_update", customerDto);
+        } else
+            model.addAttribute("customer_update", id + " numaralı veri yoktur");
         return "customer/update";
     }
 
-    // UPDATE => POST
+    // UPDATE
+    // http://localhost:2222/customer/update/1
     @Override
     @PostMapping("/update/{id}")
-    public String updatePostMapping(@PathVariable(name = "id") Long id, @Valid @ModelAttribute("customer_update") CustomerDto customerDto, BindingResult bindingResult, Model model) {
+    public String customerUpdatePost(@PathVariable(name = "id") Long id, @Valid @ModelAttribute("customer_update") CustomerDto customerDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            log.error("HATA CREATED" + bindingResult);
+            log.error("HATA: " + bindingResult);
             return "customer/update";
         }
-        //eğer hata yoksa
-        model.addAttribute("customer_success", "Müşteri Güncellendi" + customerDto);
-        log.info(customerDto);
-        // Services Create
-        customerServices.updateCustomer(id,customerDto);
-        return "redirect:/list";
+        customerServices.updateCustomer(id, customerDto);
+        return "redirect:/customer/list";
     }
-
 }
+

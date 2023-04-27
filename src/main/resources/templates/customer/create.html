@@ -1,5 +1,5 @@
 <!doctype html>
-<html  th:lang="${#locale.language}"  xmlns:th="http://www.thymeleaf.org" >
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Thymeleaf String</title>
 
@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- seo -->
-    <meta name="keywords" content="html5,css3,js,jquery,bootstrap,react,javase" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="keywords" content="html5,css3,js,jquery,bootstrap,react,javase"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
     <!-- font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
@@ -31,17 +31,64 @@
     <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 
-    <link rel="stylesheet"   th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <script th:src="@{/js/template.js}"></script>
 </head>
 
 <body class="container">
 
-    <!-- start codes -->
-    <h1 class="text-primary">CREATE</h1>
+<a th:href="@{/customer/list}" class="btn btn-primary">Customer List</a>
+<!-- start codes -->
+<h1 class="text-primary">CREATE</h1>
 
-    <!-- ends codes -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<div class="container">
+    <div class="row">
+        <h1 class="text-uppercase mt-5 mb-3">Üye Kayıt</h1>
+        <form th:action="@{/customer/create}" th:object="${customer_create}" method="post">
+            <div class="col-md col-sm">
+                <div class="form-group mb-4">
+                    <input type="text" class="form-control" placeholder="Adı"
+                           id="name"   name="name" autofocus="true"
+                           th:field="*{name}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('name')}"
+                          th:errors="*{name}"></span>
+                </div>
+            </div>
+            <div class="col-md col-sm">
+                <div class="form-group mb-4">
+                    <input type="text" class="form-control" placeholder="soyadı" id="surname"
+                           name="surname" th:field="*{surname}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('surname')}"
+                          th:errors="*{surname}"></span>
+                </div>
+            </div>
+            <div class="col-md col-sm">
+                <div class="form-group mb-4">
+                    <input type="text" class="form-control" placeholder="Email" id="email" name="email"
+                           th:field="*{email}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                </div>
+            </div>
+            <div class="col-md col-sm">
+                <div class="form-group mb-4">
+                    <input type="text" class="form-control" placeholder="password" id="password" name="password"
+                           th:field="*{password}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </div>
+            </div>
+            <div class="col-md col-sm">
+                <div class="form-group mb-4">
+                    <button type="reset" class="btn btn-warning">Temizle</button>
+                    <button type="submit" class="btn btn-primary">Gönder</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- ends codes -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
