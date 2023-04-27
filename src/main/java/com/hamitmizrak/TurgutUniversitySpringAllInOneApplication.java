@@ -40,6 +40,5 @@ public class TurgutUniversitySpringAllInOneApplication {
         System.setProperty("java.awt.headless", "false");
 
         SpringApplication.run(TurgutUniversitySpringAllInOneApplication.class, args);
-    }
-
-}
+    } //end PSVM
+} // end TurgutUniversitySpringAllInOneApplication
