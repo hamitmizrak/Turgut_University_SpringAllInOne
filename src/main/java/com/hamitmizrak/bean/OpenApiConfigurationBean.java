@@ -11,9 +11,19 @@ import org.springframework.context.annotation.Configuration;
 //@EnableSwagger2
 public class OpenApiConfigurationBean {
 
-    //localhost:2222/swagger-ui.html
-    //swagger: API Document
+
     @Bean
+    public OpenAPI openApi() {
+        return new OpenAPI().info(new Info().title("Başlık Bilgisi").description("Tanımlama").version("v1.0")
+                .contact(new Contact().name("Hamit").url("https//www.hamitmizrak.com.tr").email("hamitmizrak@gmail.com"))
+                .termsOfService("INC BY ")
+                .license(new License().name("License").url("#!")));
+    }
+}
+
+//localhost:2222/swagger-ui.html
+//swagger: API Document
+ /*   @Bean
     public OpenAPI openAPIMethod() {
         return new OpenAPI().info(new Info()
                 .title("title bilgisi")
@@ -28,6 +38,6 @@ public class OpenApiConfigurationBean {
                         .name("Licence ")
                         .url("www."))
         );
-    }
-}
+    }*/
+
 
