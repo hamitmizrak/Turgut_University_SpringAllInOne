@@ -1,6 +1,8 @@
-package com.hamitmizrak.exception;
+package com.hamitmizrak.handlecustomise;
 
 import com.hamitmizrak.error.ApiResult;
+import com.hamitmizrak.exception.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -9,13 +11,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RestGlobalHandlingException {
 
     //application.properties veri al
+    @Value("${api.result.error}")
+    private String errorApplicationProperties;
 
+    @Value("${api.result.message}")
+    private String messageApplicationProperties;
     // HamitMizrakException
+    // KONTROL ==> http://localhost:2222/customer/api/v1/find
     @ExceptionHandler({HamitMizrakException.class})
     public ApiResult adviceHamitMizrakException() {
         ApiResult  apiResult = ApiResult.builder()
-                .error("Genel hata")
-                .message("Rest Global Handling Exception")
+                .error(errorApplicationProperties)
+                .message(messageApplicationProperties)
                 .path("/api")
                 .status(44)
                 .build();
