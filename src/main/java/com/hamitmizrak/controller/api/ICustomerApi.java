@@ -7,6 +7,12 @@ import java.util.Map;
 
 public interface ICustomerApi {
 
+    //SPEED DATA
+    public ResponseEntity<CustomerDto>  speedData();
+
+    // DELETE ALL
+    public ResponseEntity<String>  customerAllDelete();
+
     // CREATE
     public ResponseEntity<CustomerDto>  createRegister(CustomerDto customerDto);
 

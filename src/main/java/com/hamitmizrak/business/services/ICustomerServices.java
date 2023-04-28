@@ -8,6 +8,12 @@ import java.util.Map;
 
 public interface ICustomerServices {
 
+    // SPEED DATA
+    public CustomerDto speedData();
+
+    // DELETE ALL
+    public String customerAllDelete();
+
     // MODEL MAPPER
     public CustomerDto EntityToDto(CustomerEntity customerEntity  );
     public CustomerEntity DtoToEntity(CustomerDto customerDto);

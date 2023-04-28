@@ -51,6 +51,22 @@ public class CustomerApiImpl implements ICustomerApi {
     //3.YOL => Constructor Injection (LOMBOK)
     private final CustomerServices customerServices;
 
+    // SPEED ALL
+    // http://localhost:2222/customer/api/v1/speedData
+    @Override
+    @GetMapping("/speedData")
+    public ResponseEntity<CustomerDto> speedData() {
+        return ResponseEntity.ok(customerServices.speedData());
+    }
+
+    // DELETE ALL
+    // http://localhost:2222/customer/api/v1/customerAllData
+    @Override
+    @GetMapping("/customerAllData")
+    public ResponseEntity<String> customerAllDelete() {
+        return ResponseEntity.ok(customerServices.customerAllDelete());
+    }
+
     // CREATE
     // http://localhost:2222/customer/api/v1/create
     @Override

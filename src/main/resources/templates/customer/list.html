@@ -42,61 +42,72 @@
 
 <!-- http://localhost:2222/customer/list -->
 
-<div class="alert alert-primary alert-dismissible fade show" role="alert">
+<div th:if="${model_list}!=null" class="alert alert-primary alert-dismissible fade show mt-5" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <strong th:text="${customer_success}"></strong>
+    <strong th:text="${model_list}"></strong>
 </div>
 
+<!-- start codes -->
+<h1 class="text-primary mt-5">LIST</h1>
+
 <a th:href="@{/customer/create}" class="btn btn-primary">EKLE</a>
-<a th:href="@{/speedData}" class="btn btn-secondary">Hızlı Ekle</a>
-<a th:href="@{/speedDelete}" class="btn btn-danger">Bütün veriyi sil</a>
+<a th:href="@{/customer/speedData}" class="btn btn-secondary">Hızlı Ekle</a>
+<a th:href="@{/customer/customerAllData}" th:onclick="if(!(confirm('Bütün Verileri silmek istiyor musunuz ?'))) return false" class="btn btn-danger">
+    <i class="fa-solid fa-trash"></i>
+</a>
+</td>
 <br><br>
 
-<!-- start codes -->
-<h1 class="text-primary">LIST</h1>
-
-
-<table class="table table-hover table-striped" id="datalistregisterTable">
-    <thead>
-    <tr>
-        <th class="text-uppercase" th:text="#{customer.id}"></th>
-        <th class="text-uppercase" th:text="#{customer.name}"></th>
-        <th class="text-uppercase" th:text="#{customer.surname}"></th>
-        <th class="text-uppercase" th:text="#{customer.email}"></th>
-        <th class="text-uppercase" th:text="#{customer.password}"></th>
-        <th class="text-uppercase" th:text="#{customer.date}"></th>
-        <th class="text-uppercase" th:text="#{customer.update}"></th>
-        <th class="text-uppercase" th:text="#{customer.show}"></th>
-        <th class="text-uppercase" th:text="#{customer.delete}"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${cust.id>0}" th:each="cust:${customer_list}">
-        <td th:text="${cust.id}"></td>
-        <td th:text="${cust.name}"></td>
-        <td th:text="${cust.surname}"></td>
-        <td th:text="${cust.email}"></td>
-        <td th:text="${cust.password}"></td>
-        <td th:text="${cust.createdDate}"></td>
-        <td>
-            <a class="btn btn-primary" th:href="@{/customer/update/{id}(id=${cust.id})}">
-                <i   class="fa-solid fa-wrench"></i>
+<div th:if="${customer_list}!=null" class="container my-5">
+    <table class="table table-hover table-striped" id="datalistregisterTable">
+        <thead>
+        <tr>
+            <th class="text-uppercase" th:text="#{customer.id}"></th>
+            <th class="text-uppercase" th:text="#{customer.name}"></th>
+            <th class="text-uppercase" th:text="#{customer.surname}"></th>
+            <th class="text-uppercase" th:text="#{customer.email}"></th>
+            <th class="text-uppercase" th:text="#{customer.password}"></th>
+            <th class="text-uppercase" th:text="#{customer.date}"></th>
+            <th class="text-uppercase" th:text="#{customer.update}"></th>
+            <th class="text-uppercase" th:text="#{customer.show}"></th>
+            <th class="text-uppercase" th:text="#{customer.delete}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${cust.id>0}" th:each="cust:${customer_list}">
+            <td th:text="${cust.id}"></td>
+            <td th:text="${cust.name}"></td>
+            <td th:text="${cust.surname}"></td>
+            <td th:text="${cust.email}"></td>
+            <td th:text="${cust.password}"></td>
+            <td th:text="${cust.createdDate}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/customer/update/{id}(id=${cust.id})}">
+                    <i class="fa-solid fa-wrench"></i>
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-success" th:href="@{/customer/find/{id}(id=${cust.id})}">
+                    <i class="fa-solid fa-eye btn-sm"></i>
+                </a>
+            </td>
+            <!--
+            <td>
+            <a th:href="@{/customer/delete/{id}(id=${cust.id})}" th:onclick="if(!(confirm('silmek istiyor musunuz ?'))) return false" class="btn btn-danger">
+            <i class="fa-solid fa-trash"></i>
             </a>
-        </td>
-        <td>
-            <a class="btn btn-success" th:href="@{/customer/find/{id}(id=${cust.id})}">
-                <i  class="fa-solid fa-eye btn-sm"></i>
-            </a>
-        </td>
-        <!-- <td><a th:href="@{/customer/delete/{id}(id=${cust.id})}" th:onclick="if(!(confirm('silmek istiyor musunuz ?'))) return false" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>-->
-        <td>
-            <a class="btn btn-danger" th:onclick="'deleteSweetAlertRegister(\'/customer/delete/' + ${cust.id} +'\')'">
-            <i class="fa-solid fa-trash-can"></i>
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            </td>
+            -->
+            <td>
+                <a class="btn btn-danger"
+                   th:onclick="'deleteSweetAlertRegister(\'/customer/delete/' + ${cust.id} +'\')'">
+                    <i class="fa-solid fa-trash-can"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <!-- dataTables JS: paging and sorting -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -115,7 +126,6 @@
 <!-- ends codes -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-
 
 <!--  Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

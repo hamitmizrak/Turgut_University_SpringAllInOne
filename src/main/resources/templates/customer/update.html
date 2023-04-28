@@ -39,43 +39,52 @@
 
 <a th:href="@{/customer/list}" class="btn btn-primary">Customer List</a>
 <!-- start codes -->
-<h1 class="text-primary">CREATE</h1>
+<h1 class="text-primary">UPDATE</h1>
 
 <div class="container">
     <div class="row">
         <h1 class="text-uppercase mt-5 mb-3">Üye Güncelle</h1>
         <form th:action="@{/customer/update/{id}(id=${customer_update.id})}" th:object="${customer_update}"  th:method="post">
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
-                    <input type="text" class="form-control" placeholder="Adı"
-                           id="name"   name="name" autofocus="true"
+                    <input type="text" class="form-control"
+                           placeholder="Adı" autofocus="true"
+                           id="name"   name="name"
                            th:field="*{name}"/>
                     <span class="text-danger" th:if="${#fields.hasErrors('name')}"
                           th:errors="*{name}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
-                    <input type="text" class="form-control" placeholder="soyadı" id="surname"
+                    <input type="text" class="form-control"
+                           placeholder="soyadı" id="surname"
                            name="surname" th:field="*{surname}"/>
                     <span class="text-danger" th:if="${#fields.hasErrors('surname')}"
                           th:errors="*{surname}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
-                    <input type="text" class="form-control" placeholder="Email" id="email" name="email"
+                    <input type="text" class="form-control"
+                           placeholder="Email" id="email" name="email"
                            th:field="*{email}"/>
                     <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
-                    <input type="text" class="form-control" placeholder="password" id="password" name="password"
+                    <input type="text" class="form-control"
+                           placeholder="password" id="password" name="password"
                            th:field="*{password}"/>
                     <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
                     <button type="reset" class="btn btn-warning">Temizle</button>
@@ -85,7 +94,6 @@
         </form>
     </div>
 </div>
-
 
 <!-- ends codes -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

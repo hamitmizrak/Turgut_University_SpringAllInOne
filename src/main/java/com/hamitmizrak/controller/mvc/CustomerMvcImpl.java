@@ -1,6 +1,5 @@
 package com.hamitmizrak.controller.mvc;
 
-
 import com.hamitmizrak.business.dto.CustomerDto;
 import com.hamitmizrak.business.services.ICustomerServices;
 import jakarta.validation.Valid;
@@ -21,10 +20,33 @@ import java.util.Map;
 // Spring MVC
 @Controller
 @RequestMapping("/customer")
-public class CustomerMvc implements ICustomerMvc {
+public class CustomerMvcImpl implements ICustomerMvc {
+
+    // List,Create, Delete => gelen modelAddAttributes
+    private String modelAttributesTemp=null;
 
     // Injection
     private final ICustomerServices customerServices;
+
+    // SPEEAD DATA => GET
+    // http://localhost:2222/customer/speedData
+    @Override
+    @GetMapping("/speedData")
+    public String customerSpeedDataGet() {
+        customerServices.speedData();
+        modelAttributesTemp="5 tane veri eklendi";
+        return "redirect:/customer/list";
+    }
+
+    // ALL DELETE => GET
+    // http://localhost:2222/customer/customerAllData
+    @Override
+    @GetMapping("/customerAllData")
+    public String customerAllDeleteGet() {
+        customerServices.customerAllDelete();
+        modelAttributesTemp="Bütün Veriler Silindi";
+        return "redirect:/customer/list";
+    }
 
     // CREATE => GET
     // http://localhost:2222/customer/create
@@ -44,10 +66,11 @@ public class CustomerMvc implements ICustomerMvc {
             return "customer/create";
         }
         //eğer hata yoksa
-        model.addAttribute("customer_success", "Müşteri Eklendi" + customerDto);
+        model.addAttribute("success_create", "Müşteri Eklendi" + customerDto);
         log.info(customerDto);
         // Services Create
         customerServices.createRegister(customerDto);
+        modelAttributesTemp="Eklendi "+customerDto;
         return "redirect:/customer/list";
     }
 
@@ -63,6 +86,7 @@ public class CustomerMvc implements ICustomerMvc {
         list.forEach((temp) -> {
             System.out.println(temp);
         });
+        model.addAttribute("model_list",modelAttributesTemp);
         return "customer/list";
     }
 
@@ -86,7 +110,10 @@ public class CustomerMvc implements ICustomerMvc {
         // Services List
         Map<String, Boolean> mapDelete = customerServices.deleteCustomer(id);
         model.addAttribute("customer_find", mapDelete);
+        // Ekranda Göster
+        modelAttributesTemp="Silindi";
         System.out.println(mapDelete);
+        //return "redirect:/customer/list?sil=tamam";
         return "redirect:/customer/list";
     }
 
@@ -101,6 +128,8 @@ public class CustomerMvc implements ICustomerMvc {
             model.addAttribute("customer_update", customerDto);
         } else
             model.addAttribute("customer_update", id + " numaralı veri yoktur");
+        // Ekranda Göster
+        modelAttributesTemp=id + " numaralı veri yoktur";
         return "customer/update";
     }
 
@@ -108,12 +137,18 @@ public class CustomerMvc implements ICustomerMvc {
     // http://localhost:2222/customer/update/1
     @Override
     @PostMapping("/update/{id}")
-    public String customerUpdatePost(@PathVariable(name = "id") Long id, @Valid @ModelAttribute("customer_update") CustomerDto customerDto, BindingResult bindingResult, Model model) {
+    public String customerUpdatePost(
+            @PathVariable(name = "id") Long id,
+            @Valid @ModelAttribute("customer_update") CustomerDto customerDto,
+            BindingResult bindingResult,
+            Model model) {
         if (bindingResult.hasErrors()) {
             log.error("HATA: " + bindingResult);
             return "customer/update";
         }
         customerServices.updateCustomer(id, customerDto);
+        model.addAttribute("success_update", "Güncellendi");
+        modelAttributesTemp=id + " Güncellendi "+customerDto;
         return "redirect:/customer/list";
     }
 }

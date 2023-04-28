@@ -2,7 +2,19 @@ package com.hamitmizrak.controller.mvc;
 import com.hamitmizrak.business.dto.CustomerDto;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+
+// for Spring MVC
 public interface ICustomerMvc {
+
+
+    // SPEEAD DATA => GET
+    // http://localhost:2222/customer/speedData
+    String customerSpeedDataGet();
+
+    // ALL DELETE => GET
+    // http://localhost:2222/customer/customerAllData
+    String customerAllDeleteGet();
 
     // CREATE => GET
     // http://localhost:2222/customer/create

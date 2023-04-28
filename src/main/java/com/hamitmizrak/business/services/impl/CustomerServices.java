@@ -14,10 +14,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // LOMBOK
 @RequiredArgsConstructor // injection
@@ -33,6 +30,32 @@ public class CustomerServices implements ICustomerServices {
     private final ModelMapperBean modelMapperBean;
     private final PasswordEncoderBean passwordEncoderBean;
 
+
+    // SPEED DATA
+    @Override
+    public CustomerDto speedData() {
+        CustomerDto customerDto=null;
+        for (int i = 1; i <= 5; i++) {
+             customerDto = CustomerDto.builder()
+                    .name("adı " + i)
+                    .surname("soyadı " + i)
+                    .email(UUID.randomUUID().toString().concat("@gmail.com"))
+                    .password("root")
+                    .build();
+            customerDto.setPassword(passwordEncoderBean.passwordEncoderMethod().encode(customerDto.getPassword()));
+            // DTO ==> ENTITY Model Mapper
+            CustomerEntity customerEntityMapper = DtoToEntity(customerDto);
+            CustomerEntity customerEntityRepository = iCustomerRepository.save(customerEntityMapper);
+        }
+        return customerDto;
+    }
+
+    // DELETE ALL
+    @Override
+    public String customerAllDelete() {
+        iCustomerRepository.deleteAll();
+        return  "Bütün veriler silindi";
+    }
 
     //MODEL MAPPER
     @Override
@@ -74,6 +97,9 @@ public class CustomerServices implements ICustomerServices {
         List<CustomerDto> entityToDtoList = new ArrayList<>();
         for (CustomerEntity temp : customerEntityList) {
             CustomerDto customerDto = EntityToDto(temp);
+            //byte[] decodeAccessKeyPin = Base64.getDecoder().decode(passwordEncoderBean.passwordEncoderMethod().encode(customerDto.getPassword()));
+            //String decodeString = new String(decodeAccessKeyPin);
+            //customerDto.setPassword(decodeString);
             entityToDtoList.add(customerDto);
         }
         return entityToDtoList;
@@ -82,11 +108,11 @@ public class CustomerServices implements ICustomerServices {
     // FIND
     @Override
     public CustomerDto getFindByCustomerId(Long id) {
-        CustomerEntity customerEntity=null;
-        if(id!=null){
+        CustomerEntity customerEntity = null;
+        if (id != null) {
             customerEntity = iCustomerRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id + " nolu ID yoktur"));
-        }else if (id == null) {
+        } else if (id == null) {
             throw new HamitMizrakException("Customer Dto Null geldi");
         }
         return EntityToDto(customerEntity);
@@ -103,7 +129,7 @@ public class CustomerServices implements ICustomerServices {
         CustomerEntity customerEntity = DtoToEntity(customerDto);
         if (customerEntity != null) {
             iCustomerRepository.delete(customerEntity);
-            mapDelete.put("Silindi",Boolean.TRUE);
+            mapDelete.put("Silindi", Boolean.TRUE);
         }
         return mapDelete;
     }

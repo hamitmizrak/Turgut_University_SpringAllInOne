@@ -54,6 +54,7 @@
                           th:errors="*{name}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
                     <input type="text" class="form-control" placeholder="soyadı" id="surname"
@@ -62,6 +63,7 @@
                           th:errors="*{surname}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
                     <input type="text" class="form-control" placeholder="Email" id="email" name="email"
@@ -69,6 +71,7 @@
                     <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
                     <input type="text" class="form-control" placeholder="password" id="password" name="password"
@@ -76,6 +79,7 @@
                     <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
             </div>
+
             <div class="col-md col-sm">
                 <div class="form-group mb-4">
                     <button type="reset" class="btn btn-warning">Temizle</button>
