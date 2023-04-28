@@ -3,6 +3,7 @@ package com.hamitmizrak.security;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +21,12 @@ import org.springframework.security.web.SecurityFilterChain;
 // WebSecurityConfig
 @Configuration
 @EnableWebSecurity
+
+//h2-console
+@ConditionalOnProperty(
+        value="spring.h2.console.enabled",
+        havingValue = "true",
+        matchIfMissing = false)
 public class WebSecurityConfig {
 
     // Global Variable ==> application.properties
@@ -82,12 +89,16 @@ public class WebSecurityConfig {
     @SneakyThrows // throws Exception
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
         httpSecurity
+                .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/home","/").permitAll()
                 .requestMatchers("/logout").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest()
                 .authenticated()
+                .and().csrf().ignoringRequestMatchers("/h2-console/**")
+                .and().headers().frameOptions().sameOrigin()
                 .and()
                 //.httpBasic();
                 .formLogin()

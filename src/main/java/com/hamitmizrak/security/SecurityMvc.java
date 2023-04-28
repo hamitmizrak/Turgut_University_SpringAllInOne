@@ -1,4 +1,4 @@
-package com.hamitmizrak.controller.mvc;
+package com.hamitmizrak.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,10 +24,13 @@ public class SecurityMvc {
     // http://localhost:2222/logout44
     @GetMapping("/logout44")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response, Model model){
+        //sistemdeki kullanıcı ismini Session ile almalısın
         //sayfaya giriş yapmış userlar
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication);
-        if(authentication!=null){
+        if(authentication!=null && authentication.isAuthenticated()) {
+            System.out.println(authentication);
+            System.out.println(authentication.getName());
+            System.out.println(authentication.getPrincipal());
             new SecurityContextLogoutHandler().logout(request,response,authentication);
             model.addAttribute("admin_logout","Sistemden çıkış yapıldı");
         }else{

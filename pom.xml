@@ -99,11 +99,11 @@
             <version>${swagger.version}</version>
         </dependency>
 
-        <dependency>
+      <!--  <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-webflux-ui</artifactId>
             <version>1.6.12</version>
-        </dependency>
+        </dependency>-->
 
         <!--Database-->
         <!--h2DB-->

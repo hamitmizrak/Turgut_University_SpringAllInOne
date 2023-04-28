@@ -52,5 +52,19 @@ public class CustomerDto implements Serializable {
     private Object specialObject;
 
     //DATE
+    private Date systemDate;
+
+    //Audit
+    // Kim  ekledi ?
+    private String createdBy;
+
+    // Kim ne zaman ekledi ?
     private Date createdDate;
+
+    // Kim güncelledi ?
+    private String updateBy;
+
+    // Kim ne zaman güncelledi ?
+    private Date updateDate;
+
 } // end class

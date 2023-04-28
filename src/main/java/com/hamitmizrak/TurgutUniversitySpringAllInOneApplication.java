@@ -27,7 +27,6 @@ import java.util.TimeZone;
 }
 )
 */
-
 @SpringBootApplication
 public class TurgutUniversitySpringAllInOneApplication {
 

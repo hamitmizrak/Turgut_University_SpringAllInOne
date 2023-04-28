@@ -55,6 +55,9 @@
 <a th:href="@{/customer/customerAllData}" th:onclick="if(!(confirm('Bütün Verileri silmek istiyor musunuz ?'))) return false" class="btn btn-danger">
     <i class="fa-solid fa-trash"></i>
 </a>
+<a th:href="@{/logout44}">
+    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+</a>
 </td>
 <br><br>
 
@@ -68,6 +71,8 @@
             <th class="text-uppercase" th:text="#{customer.email}"></th>
             <th class="text-uppercase" th:text="#{customer.password}"></th>
             <th class="text-uppercase" th:text="#{customer.date}"></th>
+            <th class="text-uppercase">Kim Ekledi</th>
+            <th class="text-uppercase">Kim Günledi</th>
             <th class="text-uppercase" th:text="#{customer.update}"></th>
             <th class="text-uppercase" th:text="#{customer.show}"></th>
             <th class="text-uppercase" th:text="#{customer.delete}"></th>
@@ -80,7 +85,9 @@
             <td th:text="${cust.surname}"></td>
             <td th:text="${cust.email}"></td>
             <td th:text="${cust.password}"></td>
-            <td th:text="${cust.createdDate}"></td>
+            <td th:text="${cust.systemDate}"></td>
+            <td th:text="${cust.createdBy}"></td>
+            <td th:text="${cust.updateBy}"></td>
             <td>
                 <a class="btn btn-primary" th:href="@{/customer/update/{id}(id=${cust.id})}">
                     <i class="fa-solid fa-wrench"></i>
