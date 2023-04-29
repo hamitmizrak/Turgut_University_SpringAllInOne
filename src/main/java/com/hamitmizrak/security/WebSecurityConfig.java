@@ -87,24 +87,26 @@ public class WebSecurityConfig {
     // securityFilterChain
     @Bean
     @SneakyThrows // throws Exception
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
-        httpSecurity
-                .csrf().disable()
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+        http
                 .authorizeRequests()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/home","/").permitAll()
                 .requestMatchers("/logout").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
                 .anyRequest()
                 .authenticated()
-                .and().csrf().ignoringRequestMatchers("/h2-console/**")
-                .and().headers().frameOptions().sameOrigin()
                 .and()
                 //.httpBasic();
                 .formLogin()
                 .and()
                 .logout().logoutUrl("/logout44").invalidateHttpSession(true);// var olan sessionları kapatıyor.
-        return httpSecurity.build();
+
+        // H2-console için yazdım
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+        return http.build();
     }
 
     @Bean
@@ -112,5 +114,4 @@ public class WebSecurityConfig {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         return passwordEncoder;
     }
-
 }//end class
