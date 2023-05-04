@@ -7,6 +7,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -83,6 +84,7 @@ public class CustomerApiImpl implements ICustomerApi {
     // http://localhost:2222/customer/api/v1/list
     @Override
     @GetMapping( "list")
+    @Cacheable(value = "cacheCustomerList")
     public ResponseEntity<List<CustomerDto>> getAllCustomers() {
         return ResponseEntity.ok(customerServices.getAllCustomers());
     }
