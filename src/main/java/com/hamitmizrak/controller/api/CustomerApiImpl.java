@@ -80,6 +80,7 @@ public class CustomerApiImpl implements ICustomerApi {
         return ResponseEntity.ok(customerServices.createRegister(customerDto));
     }
 
+
     // LIST
     // http://localhost:2222/customer/api/v1/list
     @Override
